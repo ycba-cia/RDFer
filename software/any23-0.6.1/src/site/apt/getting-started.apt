@@ -1,0 +1,215 @@
+Getting started with <<Any23>>
+
+    <<Any23>> can be used:
+
+      * as a commandline tool from your preferred shell environment;
+      * as a RESTful Webservice;
+      * as a library.
+
+* <<Any23>> Modules
+
+    <<Any23>> is composed of the following modules:
+
+      * <<<any23-core/>>>      The core library.
+
+      * <<<any23-service/>>>   The REST service.
+
+      * <<<any23-plugins/>>>   The core additional plugins.
+
+* Use the <<Any23>> CLI
+
+   The command-line tools are provided by the <<any23-core>> module.
+
+   Once <<Any23>> has been correctly {{{./install.html}installed}}, if you want to use it as a commandline tool,
+   use the shell scripts within the <<"any23-core/bin">> directory.
+   These are provided both for Unix (Linux/OSX).
+
+   The main script is <<"any23tools">> which provides analysis, documentation, testing and debugging utilities.
+
+   Simply running <./any23tools> without options will show the <default configuration properties>
+   and the <usage> options. The resource (URL or local file) is the only mandatory argument.
+   It is possible also to specify input format, output format and other advanced options.
+
++-------------------------------------------
+any23-core/bin$ ./any23tools
+[...configuration data...]
+Usage: ToolRunner <utility> [options...]
+where <utility> one of:
+	Eval                                                              Utility for processing output log.
+	ExtractorDocumentation                Utility for obtaining documentation about metadata extractors.
+	MicrodataParser                     Commandline Tool for extracting Microdata from file/HTTP source.
+	PluginVerifier                                           Utility for plugin management verification.
+	Rover                                                                       Any23 Command Line Tool.
+	Version                        Prints out the current library version and configuration information.
+	VocabPrinter                            Prints out the RDF Schema of the vocabularies used by Any23.
+
++-------------------------------------------
+
+   The <any23tools> script detects a list of available utilities within the <<any23-core>> classpath
+   and allows to activate them.
+
+   Such utilities are:
+
+       * <<<Rover>>>: the RDF extraction tool.
+
+       * <<<ExtractorDocumentation>>>: a utility for obtaining useful information about extractors.
+
+       * <<<MicrodataParser>>>:  commandline parser to extract specific Microdata content from a web page
+                        (local or remote) and produce a JSON output compliant with the Microdata
+                        specification ({{{http://www.w3.org/TR/microdata/}http://www.w3.org/TR/microdata/}}).
+
+       * <<<Version>>>: prints out useful information about the library version and configuration.
+
+       * <<<VocabPrinter>>>: allows to dump all the <<RDFSchema>> vocabularies declared within Any23.
+       
+       * <<<Eval>>>: commandline utility for processing Any23 generated output logs.
+
+** Rover
+   
+   Rover is the main extraction tool. It allows to extract metadata from local and remote (HTTP)
+   resources, specify a custom list of extractors, specify the desired output format and other flags
+   to suppress noise and generate advanced reports.
+  
++-------------------------------------------
+any23-core/bin$ any23tools Rover
+[...configuration data...]
+usage: {<url>|<file>} [-e <arg>] [-f <arg>] [-l <arg>] [-n] [-o <arg>]
+       [-p] [-s] [-t] [-v]
+ -e <arg>                   comma-separated list of extractors, e.g.
+                            rdf-xml,rdf-turtle
+ -f,--Output format <arg>   [turtle (default), ntriples, rdfxml, quad,
+                            uris]
+ -l,--log <arg>             logging, please specify a file
+ -n,--nesting               disable production of nesting triples
+ -o,--output <arg>          ouput file (defaults to stdout)
+ -p,--pedantic              validates and fixes HTML content detecting
+                            commons issues
+ -s,--stats                 print out statistics of Any23
+ -t,--notrivial             filter trivial statements
+ -v,--verbose               show progress and debug information
++-------------------------------------------
+
+  Extract metadata from an <<HTML>> page:
+
++-----------------------------------------
+any23-core/bin$ ./any23tools Rover http://yourdomain/yourfile
++-----------------------------------------
+
+  Extract metadata from a <<local>> resource:
+
++--------------------------------------
+any23-core/bin$ ./any23tools Rover myfoaf.rdf
++--------------------------------------
+
+  Specify the output format, use the option <<"-f">> or <<"--format">>:
+  (Default output format is <<TURTLE>>).
+
++--------------------------------------
+any23-core/bin$ ./any23tools Rover -f quad myfoaf.rdf
++--------------------------------------
+
+  Filtering trivial statements
+
+    By default, <<Any23>> will extract <HTML/head> meta information, such as links to <CSS stylesheets> or meta
+    information like the author or the software used to create the <html>. Hence, if the user is only interested
+    in the structured content from the <HTML/body> tag we offer a filter functionality, activated by the <<"-t">>
+    command line argument.
+
++-------------------------
+any23-core/bin$ ./any23tools Rover -t -f quad myfoaf.rdf
++-------------------------
+
+** ExtractorDocumentation
+
+   The ExtractorDocumentation returns human readable information
+   about the registered extractors.
+
++-------------------------------------------
+any23-core/bin$ ./any23tools ExtractorDocumentation
+[...configuration data...]
+Usage:
+  ExtractorDocumentation -list
+      shows the names of all available extractors
+
+  ExtractorDocumentation -i extractor-name
+      shows example input for the given extractor
+
+  ExtractorDocumentation -o extractor-name
+      shows example output for the given extractor
+
+  ExtractorDocumentation -all
+      shows a report about all available extractors
++-------------------------------------------
+
+   List all the available extractors:
+
++--------------------------------------
+any23-core/bin$ ./any23tools ExtractorDocumentation -list
+[...configuration data...]
+csv
+html-head-icbm
+html-head-links
+html-head-title
+html-mf-adr
+html-mf-geo
+html-mf-hcalendar
+html-mf-hcard
+html-mf-hlisting
+html-mf-hrecipe
+html-mf-hresume
+html-mf-hreview
+html-mf-license
+html-mf-species
+html-mf-xfn
+html-microdata
+html-rdfa
+html-script-turtle
+rdf-nq
+rdf-nt
+rdf-turtle
+rdf-xml
++--------------------------------------
+
+** MicrodataParser
+
+   The <MicrodataParser> tool allows to apply the only MicrodataExtractor 
+   on a specific input source and returns the extracted data in the JSON format
+   declared in the Microdata specification section {{{http://www.w3.org/TR/microdata/#json}JSON}}.
+
++--------------------------------------
+bin/any23tools MicrodataParser
+Usage: {http://path/to/resource.html|file:/path/to/local.file}
++--------------------------------------
+
+
+** VocabPrinter
+
+   The VocabPrinter prints out the RDFSchema declared by all the <<Any23>>
+   declared vocabularies.
+
+   <<This tool is still in beta version.>>
+
+
+* Use <<Any23>> as a RESTful Web Service
+
+   <<Any23>> provides a Web Service that can be used to extract <RDF> from Web documents.
+   <<Any23>> services can be accessed through a {{{./service.html}RESTful API}}.
+
+   Running the server
+
+    The server command line tool is defined within the <<any23-service>> module.
+    Run the <"any23server"> script
+
++--------------------------
+any23-service/bin$ ./any23server
++--------------------------
+
+    from the command line in order to start up the server, then go to {{{http://localhost:8080/}}}
+    to access the web interface. A live demo version of such service is running at {{{http://any23.org/}}}.
+    You can also start the server from Java by running the
+    {{{./xref/org/deri/any23/servlet/Servlet.html}Any23 Servlet}} class. Maven can be used to create a WAR
+    file for deployment into an existing servlet container such as {{{http://tomcat.apache.org/}Apache Tomcat}}.
+
+* Use <<Any23>> as a Library
+
+   See our {{{./developers.html}Developers guide}} for more details.

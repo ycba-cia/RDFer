@@ -1,0 +1,5 @@
+NOTE.
+
+full.html is generated from full-template.html by the
+`massage-manual` ant command. Don't edit it directly.
+

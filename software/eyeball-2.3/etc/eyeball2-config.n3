@@ -1,0 +1,373 @@
+#
+# Eyeball 2.* configuration file
+# $Id: eyeball2-config.n3,v 1.14 2006/12/18 12:00:09 chris-dollin Exp $
+#
+
+@prefix eye:        <http://jena.hpl.hp.com/Eyeball#>.
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix dc:         <http://purl.org/dc/elements/1.1/>.
+@prefix dcterms:    <http://purl.org/dc/terms/>.
+@prefix dcmi:       <http://purl.org/dc/dcmitype/>.
+@prefix owl:        <http://www.w3.org/2002/07/owl#>.
+
+@prefix ja:         <http://jena.hpl.hp.com/2005/11/Assembler#>.
+
+eye:eyeball
+    a eye:Eyeball
+    ; eye:inspector eye:PrefixInspector,
+        eye:URIInspector,
+        eye:VocabularyInspector,
+        eye:PropertyInspector,
+        eye:ClassInspector,
+        eye:LiteralInspector
+    ; eye:analysis
+        eye:AllTypedAnalysis,
+        eye:CardinalityAnalysis,
+        eye:ClassAnalysis,
+        eye:ConsistentTypeAnalysis,
+        eye:LiteralAnalysis,
+        eye:PropertyAnalysis,
+        eye:PrefixAnalysis,
+        eye:URIAnalysis,
+        eye:VocabularyAnalysis
+    ; eye:doctor
+        eye:AllTypedDoctor,
+        eye:CardinalityDoctor,
+        eye:ClassDoctor,
+        eye:ConsistentTypeDoctor,
+        eye:LiteralDoctor,
+        eye:PropertyDoctor,
+        eye:PrefixDoctor,
+        eye:URIDoctor,
+        eye:VocabularyDoctor
+    ; eye:library eye:library
+    .
+
+eye:library 
+    eye:renderer 
+        eye:textRenderer, eye:n3Renderer, eye:rdfxmlRenderer
+    ; eye:inspector
+        eye:AllTypedInspector, 
+        eye:CardinalityInspector, 
+        eye:ConsistentTypeInspector,
+        eye:PropertyInspector,
+        eye:PrefixInspector,
+        eye:URIInspector,
+        eye:VocabularyInspector,
+        eye:ClassInspector,
+        eye:LiteralInspector
+    ; eye:analysis
+	eye:AllTypedAnalysis,
+	eye:CardinalityAnalysis,
+	eye:ClassAnalysis,
+	eye:ConsistentTypeAnalysis,
+	eye:LiteralAnalysis,
+	eye:PropertyAnalysis,
+	eye:PrefixAnalysis,
+	eye:URIAnalysis,
+	eye:VocabularyAnalysis
+    ; eye:doctor
+	eye:AllTypedDoctor,
+	eye:CardinalityDoctor,
+	eye:ClassDoctor,
+	eye:ConsistentTypeDoctor,
+	eye:LiteralDoctor,
+	eye:PropertyDoctor,
+	eye:PrefixDoctor,
+	eye:URIDoctor,
+	eye:VocabularyDoctor
+    .
+
+eye:textRenderer 
+    a eye:Renderer
+    ; eye:shortName "text"
+    ; eye:className "com.hp.hpl.jena.eyeball.renderers.TextRenderer"
+    .
+    
+eye:n3Renderer
+    a eye:Renderer
+    ; eye:shortName "n3"
+    ; eye:className "com.hp.hpl.jena.eyeball.renderers.N3Renderer"
+    .
+
+eye:rdfxmlRenderer
+    a eye:Renderer
+    ; eye:shortName "rdf/xml"
+    ; eye:className "com.hp.hpl.jena.eyeball.renderers.RDFXMLRenderer"
+    .
+
+eye:PrefixInspector a eye:Inspector
+    ; eye:shortName "prefix"
+    ; eye:className "com.hp.hpl.jena.eyeball.inspectors.PrefixInspector"
+    ; rdfs:label    "check prefixes are well formed and where applicable use their well-known URIs"
+    .
+
+eye:VocabularyInspector a eye:Inspector
+    ; eye:shortName "vocabulary"
+    ; eye:className "com.hp.hpl.jena.eyeball.inspectors.VocabularyInspector"
+    ; rdfs:label    "checks URIs exist in their declared namespace"
+    .
+
+eye:URIInspector a eye:Inspector
+    ; eye:shortName "uri"
+    ; eye:className "com.hp.hpl.jena.eyeball.inspectors.URIInspector"
+    ; rdfs:label    "checks URIs are well formed using IRI"
+    .
+
+eye:AllTypedInspector a eye:Inspector
+    ; eye:shortName "allTyped"
+    ; eye:className "com.hp.hpl.jena.eyeball.inspectors.AllTypedInspector"
+    ; rdfs:label    "checks if all URI / bNode resources have an rdf:type"
+    .
+
+eye:CardinalityInspector a eye:Inspector
+    ; eye:shortName "cardinality"
+    ; eye:className "com.hp.hpl.jena.eyeball.inspectors.CardinalityInspector"
+    ; rdfs:label    "ensures cardinality restrictions are observed"
+    .
+
+eye:ConsistentTypeInspector a eye:Inspector
+    ; eye:shortName "consistentType"
+    ; eye:className "com.hp.hpl.jena.eyeball.inspectors.ConsistentTypeInspector"
+    ; rdfs:label    "sees if subjects are given a consistent type in the model (using class inference)"
+    .
+
+eye:PropertyInspector a eye:Inspector
+    ; eye:shortName "property"
+    ; eye:className "com.hp.hpl.jena.eyeball.inspectors.PropertyInspector"
+    ; rdfs:label    "checks that every used property is declared in some schema"
+    .
+
+eye:ClassInspector a eye:Inspector
+    ; eye:shortName "class"
+    ; eye:className "com.hp.hpl.jena.eyeball.inspectors.ClassInspector"
+    ; rdfs:label    "checks that all used classes are declared as a Class"
+    .
+
+eye:LiteralInspector a eye:Inspector
+    ; eye:shortName "literal"
+    ; eye:className "com.hp.hpl.jena.eyeball.inspectors.LiteralInspector"
+    ; rdfs:label    "check literals for syntactically correct language codes datatype URIs and conformance of the lexical form to the datatype"
+    .
+
+eye:Inspector rdfs:subClassOf ja:Object .
+
+eye:AllTypedAnalysis a eye:Analysis
+    ; eye:shortName "allTyped"
+    ; eye:className "com.hp.hpl.jena.eyeball.repairtools.analysis.AllTypedAnalysis"
+    .
+
+eye:CardinalityAnalysis a eye:Analysis
+    ; eye:shortName "cardinality"
+    ; eye:className "com.hp.hpl.jena.eyeball.repairtools.analysis.CardinalityAnalysis"
+    .
+
+eye:ClassAnalysis a eye:Analysis
+    ; eye:shortName "class"
+    ; eye:className "com.hp.hpl.jena.eyeball.repairtools.analysis.ClassAnalysis"
+    .
+
+eye:ConsistentTypeAnalysis a eye:Analysis
+    ; eye:shortName "consistentType"
+    ; eye:className "com.hp.hpl.jena.eyeball.repairtools.analysis.ConsistentTypeAnalysis"
+    .
+
+eye:LiteralAnalysis a eye:Analysis
+    ; eye:shortName "literal"
+    ; eye:className "com.hp.hpl.jena.eyeball.repairtools.analysis.LiteralAnalysis"
+    .
+
+eye:PrefixAnalysis a eye:Analysis
+    ; eye:shortName "prefix"
+    ; eye:className "com.hp.hpl.jena.eyeball.repairtools.analysis.PrefixAnalysis"
+    .
+
+eye:PropertyAnalysis a eye:Analysis
+    ; eye:shortName "property"
+    ; eye:className "com.hp.hpl.jena.eyeball.repairtools.analysis.PropertyAnalysis"
+    .
+
+eye:URIAnalysis a eye:Analysis
+    ; eye:shortName "uri"
+    ; eye:className "com.hp.hpl.jena.eyeball.repairtools.analysis.URIAnalysis"
+    .
+
+eye:VocabularyAnalysis a eye:Analysis
+    ; eye:shortName "vocabulary"
+    ; eye:className "com.hp.hpl.jena.eyeball.repairtools.analysis.VocabularyAnalysis"
+    .
+
+
+eye:AllTypedDoctor a eye:Doctor
+    ; eye:shortName "allTyped"
+    ; eye:runPosition 1
+    ; eye:className "com.hp.hpl.jena.eyeball.repairtools.doctor.AllTypedDoctor"
+    .
+
+eye:CardinalityDoctor a eye:Doctor
+    ; eye:shortName "cardinality"
+    ; eye:runPosition 2
+    ; eye:className "com.hp.hpl.jena.eyeball.repairtools.doctor.CardinalityDoctor"
+    .
+
+eye:ClassDoctor a eye:Doctor
+    ; eye:shortName "class"
+    ; eye:runPosition 3
+    ; eye:className "com.hp.hpl.jena.eyeball.repairtools.doctor.ClassDoctor"
+    .
+
+eye:ConsistentTypeDoctor a eye:Doctor
+    ; eye:shortName "consistentType"
+    ; eye:runPosition 4
+    ; eye:className "com.hp.hpl.jena.eyeball.repairtools.doctor.ConsistentTypeDoctor"
+    .
+
+eye:LiteralDoctor a eye:Doctor
+    ; eye:shortName "literal"
+    ; eye:runPosition 4
+    ; eye:className "com.hp.hpl.jena.eyeball.repairtools.doctor.LiteralDoctor"
+    .
+
+eye:PrefixDoctor a eye:Doctor
+    ; eye:shortName "prefix"
+    ; eye:runPosition 5
+    ; eye:className "com.hp.hpl.jena.eyeball.repairtools.doctor.PrefixDoctor"
+    .
+
+eye:PropertyDoctor a eye:Doctor
+    ; eye:shortName "property"
+    ; eye:runPosition 5
+    ; eye:className "com.hp.hpl.jena.eyeball.repairtools.doctor.PropertyDoctor"
+    .
+
+eye:URIDoctor a eye:Doctor
+    ; eye:shortName "uri"
+    ; eye:runPosition 6
+    ; eye:className "com.hp.hpl.jena.eyeball.repairtools.doctor.URIDoctor"
+    .
+
+eye:VocabularyDoctor a eye:Doctor
+    ; eye:shortName "vocabulary"
+    ; eye:runPosition 5
+    ; eye:className "com.hp.hpl.jena.eyeball.repairtools.doctor.VocabularyDoctor"
+    .
+
+# Mirrored namespaces 
+[]  a eye:mirror
+    ; eye:shortName "owl"
+    ; eye:path "mirror/owl.rdf"
+    .
+
+[]  a eye:mirror
+    ; eye:shortName "dc"
+    ; eye:path "mirror/dc.rdf"
+    .
+
+[]  a eye:mirror
+    ; eye:shortName "dcterms"
+    ; eye:path "mirror/dc-terms.rdf"
+    .
+
+[]  a eye:mirror
+    ; eye:shortName "dc-all"
+    ; eye:path "mirror/dc.rdf"
+    ; eye:path "mirror/dc-terms.rdf"
+    ; eye:path "mirror/dc-dcmitype.rdf"
+    .
+
+
+#
+# Eyeball Repair Configuration options follow
+#
+
+eye:repairConfig
+# The default scheme for the URI Repair Tools to fall back to
+      eye:defaultScheme "file:///"
+# A collection of valid schemes to spellcheck
+    ; eye:validScheme "http://" 
+    ; eye:validScheme "ftp://"
+    ; eye:validScheme "mailto:"
+    ; eye:validScheme "urn:"
+# A collection of known prefixes and URIs
+    ; eye:nsPrefix [ eye:nsURI "http://www.w3.org/2000/01/rdf-schema#"
+		   ; eye:prefix "rdfs" ]
+    ; eye:nsPrefix [ eye:nsURI "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+		   ; eye:prefix "rdf" ]
+    ; eye:nsPrefix [ eye:nsURI "http://www.w3.org/2002/07/owl#"
+		   ; eye:prefix "owl" ]
+    ; eye:nsPrefix [ eye:nsURI "http://purl.org/rss/1.0/"
+		   ; eye:prefix "rss" ]
+    ; eye:nsPrefix [ eye:nsURI "http://www.w3.org/2001/vcard-rdf/3.0#"
+		   ; eye:prefix "vcard" ]
+    ; eye:nsPrefix [ eye:nsURI "http://jena.hpl.hp.com/2005/11/Assembler#"
+		   ; eye:prefix "ja" ]
+    ; eye:nsPrefix [ eye:nsURI "http://www.w3.org/2001/XMLSchema#"
+		   ; eye:prefix "xsd" ]
+    ; eye:nsPrefix [ eye:nsURI "http://www.example.org/"
+		   ; eye:prefix "eg" ]
+    ; eye:nsPrefix [ eye:nsURI "http://purl.org/dc/elements/1.1/"
+		   ; eye:prefix "dc" ]
+    ; eye:nsPrefix [ eye:nsURI "http://jena.hpl.hp.com/2003/08/jms#"
+		   ; eye:prefix "jms" ]
+    ; eye:nsPrefix [ eye:nsURI "http://www.daml.org/2001/03/daml+oil#"
+		   ; eye:prefix "daml" ]
+    ; eye:nsPrefix [ eye:nsURI "http://jena.hpl.hp.com/Eyeball#"
+		   ; eye:prefix "eye" ]
+# Literal analysis configuration
+    ; eye:defaultDatatype "http://www.w3.org/2001/XMLSchema#string"
+    ; eye:defaultLanguage "en"
+# Change me to eye:defaultLanguage to use the default language when no suitable type is found
+    ; eye:defaultLiteralFix eye:defaultDatatype
+    .
+#
+# Statistical configuration options
+#
+
+eye:statisticianAssembly
+    a eye:Statistician
+    ; eye:statistician eye:ConfigStatistician ,
+                       eye:MetaDataStatistician ,
+                       eye:ModelStatistician ,
+                       eye:EyeballingStatistician .
+
+eye:NullStatistician a eye:Statistician
+    ; eye:shortName "null"
+    ; eye:className "com.hp.hpl.jena.eyeball.web.statistics.NullStatistician"
+    .
+
+eye:ConfigStatistician a eye:Statistician
+    ; eye:shortName "config"
+    ; eye:className "com.hp.hpl.jena.eyeball.web.statistics.ConfigStatistician"
+    .
+
+eye:MetaDataStatistician a eye:Statistician
+    ; eye:shortName "metadata"
+    ; eye:className "com.hp.hpl.jena.eyeball.web.statistics.MetaDataStatistician"
+    .
+
+eye:ModelStatistician a eye:Statistician
+    ; eye:shortName "model"
+    ; eye:className "com.hp.hpl.jena.eyeball.web.statistics.ModelStatistician"
+    .
+
+eye:EyeballingStatistician a eye:Statistician
+    ; eye:shortName "eyeballing"
+    ; eye:className "com.hp.hpl.jena.eyeball.web.statistics.EyeballingStatistician"
+    .
+
+eye:statisticsConfig
+      eye:dbURI "jdbc:mysql://localhost/repairtest"
+    ; eye:dbUser "eyeball"
+    ; eye:dbPass "r3t1n@"
+    ; eye:dbType "MySQL"
+    ; eye:dbDriver "com.mysql.jdbc.Driver"
+    ; eye:statisticsModel "eyeball_statistics"
+    ; eye:fault eye:badDatatypeURI, eye:multiplePrefixesForNamespace, eye:badNamespaceURI, 
+                eye:cardinalityFailure, eye:unknownClass, eye:badURI, eye:unknownPredicate, 
+                eye:hasNoType, eye:uriContainsSpaces, eye:uriFileInappropriate, 
+                eye:unrecognisedScheme, eye:uriHasNoScheme, eye:uriNoHttpAuthority, 
+                eye:uriSyntaxFailure, eye:namespaceEndsWithNameCharacter, eye:jenaPrefixFound, 
+                eye:badLanguage, eye:notFromSchema, eye:uriFailsPattern, eye:noConsistentTypeFor, 
+                eye:schemeShouldBeLowercase, eye:resourceRequired
+    .

@@ -1,0 +1,76 @@
+<html>
+<head>
+<title>Eyeball</title>
+<link type="text/css" rel="stylesheet" href="styles/doc.css">
+</head>
+<body>
+
+<h1>Eyeball: checking RDF/OWL for common problems</h1>
+
+Eyeball is a Jena contrib for checking RDF models (including OWL) for
+common problems. It is user-extensible using plugins. The available 
+documentation for this Eyeball, E2.3, is:
+
+<ul>
+<li>This index and one-minute introduction.
+<li>The <a href="brief.html">brief guide</a>.
+<li>The <i>experimental</i> <a href="gui.html">Eyeball GUI</a>.
+<li>The full <a href="full.html">manual</a>.
+<li>The <a href="javadoc/index.html">javadoc</a>.
+</ul>
+
+You can download Eyeball from the
+<a href="http://sourceforge.net/project/showfiles.php?group_id=40417&package_id=148927">
+Eyeball package page</a>. Eyeball needs Java 5 or later to run.
+
+<h1>one-minute introduction</h1>
+
+<h2>installation</h2>
+
+<p>
+If you haven't already, download Eyeball from the
+<a href="http://sourceforge.net/project/showfiles.php?group_id=40417&package_id=148927">Eyeball package page</a>
+and unzip it into a directory of your choice.
+The download is rather large, because Eyeball 2.3 includes the Jena
+jars so that it runs stand-alone.
+
+<p>If you have Ant installed, run the Eyeball test suite:
+
+<blockquote>
+ant test 
+</blockquote>
+
+<p>
+If it doesn't say that the tests passed, let us know via the jena-dev
+mailing list <i>jena-dev@groups.yahoo.com</i> (registration required)
+and we'll see what we can do to fix the problem.
+
+<p>Ensure all the jars in the Eyeball lib directory are on your classpath.
+(You might find <a href="classpath.text">this list</a> helpful.)
+
+<h2>trying it out</h2>
+
+<p>
+Pick one of your RDF files; we'll call it FOO for now. Run the command-line
+command:
+
+<blockquote>
+java jena.eyeball -check FOO
+</blockquote>
+
+<p>
+You will likely get a whole bunch
+of messages about your RDF. The messages are supposed to be self-explanatory,
+so you may be able to go ahead and fix some problems straight away. If you 
+get a Java error about <b>NoClassDefFoundError</b>, you've forgotten to
+set the classpath up or use the <i>-cp myClassPath</i> option to Java.
+
+<p>(You may also want to try the experimental <a href="gui.html">Eyeball GUI</a>,
+but you'll still need to start it from the command line.)
+
+<p>
+If the messages aren't self-explanatory, or you want more details, 
+you'll want to move on to the <a href="brief.html">brief guide</a>.
+
+</body>
+</html>

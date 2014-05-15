@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:eg="http://eyeball.jena.hpl.hp.com/eg#"
+    xmlns:bad1="unknown:scheme/"
+    xmlns:j.1="http://somewhere.org/"
+    xmlns:bad2="http://somewhere.org/beginning"
+    xmlns:bad3="file:///home/kers/RDF/onty.owl#"
+    xmlns="http://eyeball.jena.hpl.hp.com/eg#">
+</rdf:RDF>

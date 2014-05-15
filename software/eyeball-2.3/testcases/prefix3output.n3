@@ -1,0 +1,13 @@
+@prefix bad1:    <unknown:scheme/> .
+@prefix bad3:    <file:///home/kers/RDF/onty.owl#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix eg:      <http://www.example.org/> .
+@prefix rlybad:        <http://eyeball.jena.hpl.hp.com/eg#> .
+
+<http://thisisnotfrom.jena.hpl.hp.com/eg#b1>		rdf:value	"bloop" .
+rlybad:b2 	rdf:value	"bleep" .
+rlybad:b3	rdf:value	"blarp" .
+rlybad:b4	rdf:value	"blurp" .
+rlybad:b5	rdf:value	"blirp" .

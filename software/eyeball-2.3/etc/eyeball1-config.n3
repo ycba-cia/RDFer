@@ -1,0 +1,151 @@
+#
+# Eyeball configuration file
+# $Id: eyeball1-config.n3,v 1.1 2006/12/18 12:00:09 chris-dollin Exp $
+#
+
+@prefix eye:        <http://jena.hpl.hp.com/Eyeball#>.
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix dc:	        <http://purl.org/dc/elements/1.1/>.
+@prefix dcterms:    <http://purl.org/dc/terms/>.
+@prefix dcmi:       <http://purl.org/dc/dcmitype/>.
+@prefix owl:        <http://www.w3.org/2002/07/owl#>.
+
+#
+# Inspector classes. The default inspector root is eye:inspectors. Each
+# eye:inspector property value must be a literal string naming an Inspector
+# class. These classes are loaded by Eyeball and inspect the model for
+# whatever problem they are concerned with.
+#
+
+eye:inspectors
+    eye:shortName "defaultInspectors"
+	; eye:includeByName "predicate"
+    ; eye:includeByName "presumed-class"
+	; eye:includeByName "literal"
+	; eye:includeByName "URI"
+	; eye:includeByName "prefix"
+    ; eye:includeByName "jena-prefix"
+	; eye:includeByName "cardinality"
+	; eye:includeByName "vocabulary"
+	.
+
+[]
+    eye:shortName "predicate"
+    ; eye:inspector "com.hp.hpl.jena.eyeball.inspectors.PredicateInspector"
+    .
+
+
+[]
+    eye:shortName "presumed-class"
+    ; eye:inspector "com.hp.hpl.jena.eyeball.inspectors.PresumedClassInspector"
+    .
+
+[]
+    eye:shortName "literal"
+    ; eye:inspector "com.hp.hpl.jena.eyeball.inspectors.LiteralInspector"
+    .
+
+[]
+    eye:shortName "URI"
+    ; eye:inspector "com.hp.hpl.jena.eyeball.inspectors.URIInspector"
+    .
+
+[]
+    eye:shortName "prefix"
+    ; eye:inspector "com.hp.hpl.jena.eyeball.inspectors.PrefixInspector"
+    .
+
+[]
+    eye:shortName "jena-prefix"
+    ; eye:inspector "com.hp.hpl.jena.eyeball.inspectors.JenaPrefixInspector"
+    .
+
+[]
+    eye:shortName "cardinality"
+    ; eye:inspector "com.hp.hpl.jena.eyeball.inspectors.CardinalityInspector"
+    .
+
+[]
+    eye:shortName "vocabulary"
+    ; eye:inspector "com.hp.hpl.jena.eyeball.inspectors.VocabularyInspector"
+    .
+
+[]
+    eye:shortName "consistent-type"
+    ; eye:inspector "com.hp.hpl.jena.eyeball.inspectors.ConsistentTypeInspector"
+    .
+
+[]
+    eye:shortName "all-typed"
+    ; eye:inspector "com.hp.hpl.jena.eyeball.inspectors.AllTypedInspector"
+    .
+
+#
+# names for renderers; each short name is associated with a unique
+# eye:renderer property value.
+#
+
+[]
+    eye:renderer "com.hp.hpl.jena.eyeball.renderers.SimpleN3Renderer"
+    ; eye:shortName "N3"
+    ; eye:shortName "n3"
+    .
+
+[]
+    eye:renderer "com.hp.hpl.jena.eyeball.renderers.SimpleXMLRenderer"
+    ; eye:shortName "XML"
+    ; eye:shortName "xml"
+    .
+
+[]
+    eye:renderer "com.hp.hpl.jena.eyeball.renderers.SimpleTextRenderer"
+    ; eye:shortName "default"
+    ; eye:shortName "text"
+    .
+
+#
+# Short names for schemas; each shortName'd bnode has a bunch of
+# full URLs for the schemas to be loaded. (The full names are mapped
+# by the FileManager according to the location-mapping config file.)
+#
+
+[] eye:shortName "rdf"
+    ; eye:schema rdf:
+    .
+
+[] eye:shortName "rdfs"
+    ; eye:schema rdfs:
+    .
+
+[] eye:shortName "dc"
+    ; eye:schema dc:
+    .
+
+[] eye:shortName "dcterms"
+    ; eye:schema dcterms:
+    .
+
+[] eye:shortName "dcmi"
+    ; eye:schema dcmi:
+    .
+
+[] eye:shortName "dc-all"
+    ; eye:schema dc:, dcterms:, dcmi:
+    .
+
+[] eye:shortName "owl"
+    ; eye:schema owl:
+    .
+
+#
+# Patterns for URI schemes. 
+#
+
+[]
+    eye:schemePattern "http:.*"
+    ; eye:schemePattern "ftp:.*" 
+    ; eye:schemePattern "urn:[A-Za-z][A-Za-z0-9-]*:.*"
+    ; eye:schemePattern "eh:.*"
+    ; eye:schemePattern "file:.*"
+    .

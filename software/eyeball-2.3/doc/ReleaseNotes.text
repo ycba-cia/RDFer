@@ -1,0 +1,221 @@
+Eyeball 2.3
+
+* No functionality changes: this is a code & management
+  hygiene release.
+
+* code previously supplied by the Jena "extras" module
+  has been folded into Eyeball.
+
+* the test suite has been updated to use JUnit4.
+
+Eyeball 2.2
+
+(never existed)
+
+Eyeball 2.1
+
+* the manual full.html has been reorganised and extended
+  to include brief notes on writing new inspectors.
+
+* models to check can now be specified using the new
+  assembler-load syntax, ja:ROOT@FILE.
+
+* A new inspector, the SparqlDrivenInspector, has been added.
+  It can be configured to reject models that don't (or do)
+  satisfy some SPARQL query. The query can come from an
+  embedded string or a file specified using @-insertion.
+
+* A new inspector, the OwlSyntaxInspector, is available under
+  the short name "owl". It reports putative restrictions that
+  don't have exactly one onProperty and exactly one constraint.
+
+* There is a new -sign command option which does the inspection
+  and generates a signed version of the model if it succeeds.
+  The -accept command option checks signatures. Any existing
+  signature is stripped from a model before any eyeballing.
+
+* The default profile for a model-to-check is now OWL_MEM, not
+  RDFS.
+
+* Eyeball now exits with an exit status of 0 if all the checks
+  passed and 1 if any failed (ie any report was non-valid).
+  If the option -remark is specified, then it will report to
+  stderr whether the checks all succeeded or not.
+
+* The text renderer configuration now includes the property
+  eye:labels. The file named by its object string have their
+  rdfs:label statements extracted and used to map resources
+  to print strings when rendering. These mappings will
+  over-ride any from the Eyeball ontology (so, for example,
+  could be in a different language).
+
+* The experimental repair tool and web-access code is available.
+
+* It is now possible to control the renderer in more detail
+  (see the unwritten yet] documentation).
+
+* All the test sources have been put into their own source
+  folder, src-test.
+
+* All the Eyeball2 code has been rolled back into plain Eyeball.
+
+
+Eyeball 2.0 [changes since 1.3]
+
+* The internal architecture has changed significantly. New code is
+  in .eyeball2 packages - the old code is untouched (to allow users
+  to transfer). The command line has changed a little. Configuration
+  is now done using the Jena 2.4 Assembler mechanisms. The default
+  behaviour is mostly unchanged, but:
+
+  + the URI inspector uses the new Jena IRI code as well as its
+    own special code. URIs with no localname are reported.
+
+  + the literal inspector checks the lexical forms of typed
+    literals for legality if possible.
+
+  + namespaces may be declared "open" so that arbitrary URIs
+    in those namespaces are allowed.
+
+  + multiple prefixes for the same URI are reported.
+
+  + it is possible to specify database models and ontology
+    models from the command line.
+
+  + the GUI uses Eyeball2. Most of its code has been moved into
+    the new com.hp.hpl.jena.eyeball.gui package. The `main` has
+    been moved from `experiments` to `jena.eyeballGUI`.
+
+Changes since 1.2a
+
+* the Dublin Core "terms" and "types" schemas are available in the
+  mirror directory, with short names dcterms and dcmi. The short
+  name dc-all loads dc, dcterms, and dcmi.
+
+* the PresumedClass, KnownPredicate, and Vocabulary inspectors all
+  know about the RDF(S) and XSD types and properties and namespaces.
+  Hence users no longer need to -assume rdf rdfs. There's an
+  xsd.n3 pseudoschema in the mirror for the XSD classes.
+
+Changes since 1.1
+
+* a CardinalityInspector has been added (`-inspectors cardinality`
+  from the command line, there's a tickbox for it in the GUI).
+  It reports cases where X is of type T, T is a subclass of a
+  cardinality restriction on P, and the number of P-values X has
+  is not in the cardinality range. "The number" is the number of
+  /syntactically/ distinct values: currently it takes no notice
+  of explicit owl:sameAs declarations or semantic equality of
+  syntactically different literals.
+
+* when the object of rdfs:domain (etc) is checked to be a class,
+  Eyeball crashed if it was a literal, because it used
+  Statement::getResource(). Fixed by adding an explicit check
+  and a new reason property, eye:resourceRequired.
+
+* added label text for eye:forNamespace
+
+Changes in 1.1 since 1.0
+
+* the experimental GUI has a file browser.
+
+* the command line -schema option has been renamed to -assume.
+  The -data option has been renamed to -check, and can now
+  take multiple arguments, which are unioned together before
+  checking.
+
+* added (and updated) the PresumedClassInspector, which
+  checks that resources appearing in [some] positions where
+  a Class is expected are indeed "declared" as Classes.
+  Those positions include as objects of rdf:type, rdfs:domain,
+  and rdfs:range; and the subjects and objects of
+  rdfs:subClassOf.
+
+* an Eyeball is no longer a PredicateRegister, but contains
+  one. This SimplePredicateRegister does a crude topological
+  sort of registered predicates when returning them as a
+  list; this improves the text renderer's report (because
+  now the properties appear in a sensible order, not dependant
+  on the order the inspectors are loaded in).
+
+* where appropriate, inspectors can construct report items
+  "anchored" to statements; those statements appear in the
+  report model as reified statements which are the object
+  of the item's eye:onStatement property.
+
+* every report item now has rdf:type eye:Item, so that
+  renderers can tell the difference between item bnodes and
+  structural bnodes - specifically the objects of onStatement.
+
+* the PredicateInspector now counts as a declaration in a
+  schema file a statement `X rdf:type rdf:Property`.
+
+* The Eyeball command-line utility now has a -config option
+  allowing the explicit specification of multiple config
+  files. Also such a config file may contain eye:loadConfig
+  statements identifying other config files - in particular,
+  this allows a single user config file to add in the shipped
+  default file.
+
+* Eyeball now checks URIs for having "known" schemes and
+  for their contents being "legal". The config file contains
+  eye:schemePattern statements; their value strings are
+  patterns matching URIs, from which the scheme parts are
+  extracted. The patterns are used to validate URIs. The
+  shipped config file places some restrictions on URNs.
+  Eyeball also notes URIs whose schemes are not lower-case.
+
+* the Eyeball config field is no longer static, but instead
+  an instance variable. There are constructors which initialise
+  it to a specific model, but it defaults to the same value
+  as before (etc/config.n3). This change allows different
+  Eyeballs in the same JVM to have different configurations
+  (which isn't needed for the command line, but may be for
+  use as a library.) See the javadoc for more details.
+
+* added SchemaList::add(Model) method, to make constructing
+  SchemaLists nicer.
+
+* added package.html documentation for the Eyeball packages
+  (so that the javadoc didn't look so bare).
+
+* added the JenaPrefixInspector [shortname jena-prefix],
+  which reports namespace prefixes generated by the
+  Jena RDF/XML writer.
+
+* the vocabulary inspector will only report once on each
+  suspicious vocabulary element, not once per occurence.
+
+* replaced command-line decoder to improve both internals
+  and externals: now has proper support for list-valued
+  options.
+
+  -inspectors no longer takes a single QName; it takes a
+  sequence of eye:shortName'd items. If omitted, it is
+  given the singleton defaultInspectors.
+
+  -exclude takes a sequence of shortnames of inspectors
+  to be excluded from the run. [`-exclude consistent-type`
+  will switch off the /expensive/ type-consistency checking.]
+
+* added TypeInspector, which tests to see if a subject's
+  attached types are consistent assuming that there are no
+  hidden subtype statements.
+
+* fixed bugette in text renderer, which was only displaying
+  one value for a multi-valued predicate.
+
+* fixed bug in language code checks - had used \P not \p in
+  regexp, hence any language code was bad ...
+
+* added new report for namespaces in prefixes if they're not
+  terminated with a non-name character.
+
+* the URIs of data-typed literals are checked in the same
+  way as other URIs (but only in that way).
+
+* the URI error message strings have been replaced by URIs
+  (with local names that make sense in English).
+
+* Each EYE URI has an associated rdfs:label; the default
+  labels are in the new etc/eyeball-schema.n3 schema file.

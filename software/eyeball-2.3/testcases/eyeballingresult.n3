@@ -1,0 +1,39 @@
+@prefix eye:     <http://jena.hpl.hp.com/Eyeball#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix eyesvc:  <http://jena.hpl.hp.com/EyeballService#> .
+
+[]  a eye:statistic
+    ; eye:failure [
+          eye:fault eye:badDatatypeURI
+        ; eye:number 3
+    ]
+    ; eye:failure [
+          eye:fault eye:multiplePrefixesForNamespace
+        ; eye:number 1
+    ]
+    ; eye:failure [
+          eye:fault eye:badNamespaceURI
+        ; eye:number 1
+    ]
+    ; eye:failure [
+          eye:fault eye:cardinalityFailure
+        ; eye:number 1
+    ]
+    ; eye:failure [
+          eye:fault eye:unknownClass
+        ; eye:number 2
+    ]
+    ; eye:failure [
+          eye:fault eye:badURI
+        ; eye:number 1
+    ]
+    ; eye:failure [
+          eye:fault eye:unknownPredicate
+        ; eye:number 1
+    ]
+    ; eye:failure [
+          eye:fault eye:hasNoType
+        ; eye:number 1
+    ]
+    ; eye:percentageChanged 60.0
+    .

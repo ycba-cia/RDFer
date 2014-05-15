@@ -1,0 +1,190 @@
+#
+# Eyeball schema file
+# $Id: eyeball-schema.n3,v 1.23 2008/10/31 13:14:09 chris-dollin Exp $
+#
+
+@prefix eye:    <http://jena.hpl.hp.com/Eyeball#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dc:     <http://purl.org/dc/elements/1.1/> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+
+eye:signatureInclusionFails rdfs:label "signature fails: missing configuration elements".
+
+eye:sparqlRequireFailed rdfs:label "SPARQL require failed".
+
+eye:sparqlProhibitFailed rdfs:label "SPARQL prohibit failed".
+
+eye:requiredItems rdfs:label "required items (from current check)".
+
+eye:signedItems rdfs:label "signed items (from signed check)".
+
+eye:missingItems rdfs:label "missing items".
+
+eye:illFormedList rdfs:label "ill-formed list".
+
+eye:hasNoFirst rdfs:label "has no rdf:first property".
+
+eye:hasMultipleFirsts rdfs:label "has multiple rdf:first properties".
+
+eye:hasNoRest rdfs:label "has no rdf:rest property".
+
+eye:hasMultipleRests rdfs:label "has multiple rdf:rest properties".
+
+eye:suspectListIdiom rdfs:label "suspect list idiom".
+
+eye:illTypedListElement rdfs:label "ill-typed list element".
+
+eye:suspiciousRestriction rdfs:label "suspicious restriction".
+
+eye:equivalentClass rdfs:label "equivalent to".
+
+eye:subClassOf rdfs:label "subclass of".
+
+eye:missingOnProperty rdfs:label "missing owl:onProperty property".
+
+eye:multipleOnProperty rdfs:label "multiple owl:onProperty properties".
+
+eye:multipleConstraint rdfs:label "multiple cardinality or value constraints".
+
+eye:missingConstraint rdfs:label "missing cardinality or value constraints".
+
+eye:shouldHaveType rdfs:label "should have type".
+
+eye:element rdfs:label "element".
+
+eye:because rdfs:label "because".
+
+eye:uriContainsSpaces rdfs:label "URI contains spaces" .
+
+eye:uriFileInappropriate rdfs:label "file URI inappropriate for namespace" .
+
+eye:unrecognisedScheme rdfs:label "URI has an unrecognised scheme" .
+
+eye:uriHasNoScheme rdfs:label "URI has no scheme" .
+
+eye:uriNoHttpAuthority rdfs:label "http: URI has no authority component" .
+
+eye:uriSyntaxFailure rdfs:label "URI syntax error" .
+
+eye:namespaceEndsWithNameCharacter rdfs:label "namespace URI ends with name character" .
+
+eye:unknownPredicate rdfs:label "predicate not declared in any schema" .
+
+eye:unknownClass rdfs:label "class not declared in any schema" .
+
+eye:hasNoType rdfs:label "resource has no rdf:type" .
+
+eye:jenaPrefixFound rdfs:label "Jena generated prefix found" .
+
+eye:onLiteral rdfs:label "on literal" .
+
+eye:onStatement rdfs:label "on statement" .
+
+eye:badLanguage rdfs:label "bad language" .
+
+eye:onProperty rdfs:label "on property" .
+
+eye:onType rdfs:label "on type" .
+
+eye:numValues rdfs:label "number of values" .
+
+eye:values rdfs:label "values" .
+
+eye:min rdfs:label "min:" .
+
+eye:max rdfs:label "max:" .
+
+eye:cardinality rdfs:label "cardinality range" .
+
+eye:notFromSchema rdfs:label "not from schema" .
+
+eye:onResource rdfs:label "on resource" .
+
+eye:cardinalityFailure rdfs:label "cardinality failure for" .
+
+eye:forReason rdfs:label "for reason" .
+
+eye:badNamespaceURI rdfs:label "bad namespace URI" .
+
+eye:onPrefix rdfs:label "on prefix" .
+
+eye:uriFailsPattern rdfs:label "URI doesn't fit pattern" .
+
+eye:badDatatypeURI rdfs:label "bad datatype URI" .
+
+eye:noConsistentTypeFor rdfs:label "no consistent typing for" .
+
+eye:hasAttachedType rdfs:label "has associated type" .
+
+eye:schemeShouldBeLowercase rdfs:label "scheme should be lower case" .
+
+eye:resourceRequired rdfs:label "resource [not literal] required" .
+
+eye:forNamespace rdfs:label "for namespace" .
+
+#
+# Eyeball repair schema entries
+#
+
+eye:repairConfidence rdfs:label "repair suggested with a confidence of" .
+
+eye:repairType rdfs:label "repair by method" .
+
+eye:checkFix rdfs:label "it is recommended to check any fix on" .
+
+eye:statementAdded rdfs:label "repair adds statement" .
+
+eye:statementRemoved rdfs:label "repair removes statement" .
+
+eye:newValue rdfs:label "such that the new value is" .
+
+#
+# -- <eye:repairConfidence>s
+#
+
+eye:fail rdfs:label "repair failed!" .
+
+eye:low rdfs:label "low" .
+
+eye:moderate rdfs:label "moderate" .
+
+eye:good rdfs:label "good" .
+
+eye:high rdfs:label "high" .
+
+#
+# -- <eye:repairType>s
+#
+
+eye:addDefaultType rdfs:label "add a default type definition" .
+
+eye:increaseCardinality rdfs:label "increase the maxCardinality" .
+
+eye:decreaseNumProperties rdfs:label "decrease the number of properties" .
+
+eye:defineClass rdfs:label "define a new class" .
+
+eye:removeType rdfs:label "remove a type definition" .
+
+eye:setLanguage rdfs:label "set the language code" .
+
+eye:setDatatype rdfs:label "set the datatype" .
+
+eye:removeDuplicatePrefixes rdfs:label "remove duplicate prefixes" .
+
+eye:replaceNamespace rdfs:label "replace the namespace" .
+
+eye:replacePredicate rdfs:label "replace the predicate" .
+
+eye:schemeToLowercase rdfs:label "convert the scheme to lower case" .
+
+eye:removeIllegalChars rdfs:label "remove illegal characters" .
+
+eye:formHttpAuthority rdfs:label "form an authority for the URI" .
+
+eye:addDefaultScheme rdfs:label "add the default scheme" .
+
+eye:removeSpaces rdfs:label "remove / replace spaces in domain / local part as applicable" .
+
+eye:replaceURI rdfs:label "replace a URI" .

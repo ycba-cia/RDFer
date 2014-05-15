@@ -1,0 +1,14 @@
+@prefix eye:     <http://jena.hpl.hp.com/Eyeball#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix eyesvc:  <http://jena.hpl.hp.com/EyeballService#> .
+
+[]  a eye:statistic
+    ; eye:eyeballerState [
+        eyesvc:hasInspector "allTyped", "cardinality", "uri"
+      ; eyesvc:hasAssume "owl"
+      ; eyesvc:inputModelType "N3"
+      ; eyesvc:reportFormat "N3"
+      ; eyesvc:doRepair  "false"^^xsd:boolean
+      ; eyesvc:doAnalysis "false"^^xsd:boolean 
+    ] .
+

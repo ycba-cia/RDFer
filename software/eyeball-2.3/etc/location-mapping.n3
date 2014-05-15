@@ -1,0 +1,20 @@
+# location mapping for Eyeball that maps RDF[S] references to local
+# mirror files.
+# $Id: location-mapping.n3,v 1.4 2006/05/03 13:56:58 chris-dollin Exp $
+#
+
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix lm:         <http://jena.hpl.hp.com/2004/08/location-mapping#> .
+
+[] lm:mapping
+   [ lm:name "http://www.w3.org/2000/01/rdf-schema#" ;		    lm:altName "file:mirror/rdfs.rdf" ]
+   , [ lm:name "http://www.w3.org/1999/02/22-rdf-syntax-ns#" ;	lm:altName "file:mirror/rdf.rdf" ] 
+   , [ lm:name "http://purl.org/dc/elements/1.1/" ;		        lm:altName "file:mirror/dc.rdf" ]
+   , [ lm:name "http://purl.org/dc/terms/" ;                    lm:altName "file:mirror/dc-terms.rdf" ]
+   , [ lm:name "http://purl.org/dc/dcmitype/" ;                 lm:altName "file:mirror/dc-dcmitype.rdf" ]
+   , [ lm:name "http://www.w3.org/2002/07/owl#" ;		        lm:altName "file:mirror/owl.rdf" ]
+   , [ lm:name "http://www.w3.org/2001/XMLSchema#" ;            lm:altName "file:mirror/xsd.n3" ]
+   , [ lm:name "localXSDschema" ;                               lm:altName "file:mirror/xsd.n3" ]
+   .

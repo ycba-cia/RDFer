@@ -1,0 +1,23 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix :        <http://eyeball.jena.hpl.hp.com/eg#> .
+
+# Class 'NoSuchClass' is declared
+:NoSuchClass 	a	owl:Class
+	.
+
+
+# Actual usage of class remains the same
+:Room		a	:NoSuchClass
+      	; rdf:value "17"
+	.
+
+# Other class declaration remains untouched
+:Bucket		a	owl:Class
+	.
+
+# Class is valid, but the property is not. Remains untouched by this RepairTool
+:B1		a	:Bucket
+	; :spoo	56
+	.

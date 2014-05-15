@@ -1,0 +1,110 @@
+@prefix rss:     <http://purl.org/rss/1.0/> .
+@prefix vcard:   <http://www.w3.org/2001/vcard-rdf/3.0#> .
+@prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix eg:      <http://www.example.org/> .
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
+@prefix jms:     <http://jena.hpl.hp.com/2003/08/jms#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix daml:    <http://www.daml.org/2001/03/daml+oil#> .
+@prefix :        <#> .
+@prefix eye:     <http://jena.hpl.hp.com/Eyeball#> .
+
+_:b1  a       rdf:Statement ;
+      rdf:object "2006-07-04T13:36:00+01:00"^^<my:flarn> ;
+      rdf:predicate <http://my.domain.com/spoo> ;
+      rdf:subject <http://my.domain.com/x> .
+
+[]    a       eye:Item ;
+      eye:multiplePrefixesForNamespace
+              "http://my.domain.com/" ;
+      eye:onPrefix "mineAlso" , "stillMine" , "my" .
+
+
+
+
+[]    a       eye:Item ;
+      eye:badDatatypeURI "my:flarn" ;
+      eye:onLiteral "2006-07-04T13:36:00+01:00" ;
+      eye:onStatement _:b1 .
+
+
+
+
+
+[]    a       eye:Item ;
+      eye:unknownPredicate
+              <http://my.domain.com/spoo> ;
+      eye:onStatement _:b1 .
+
+
+[]    a       eye:Item ;
+      eye:unknownClass <http://my.domain.com/flibbedygibbet> ;
+      eye:onStatement
+              [ a       rdf:Statement ;
+                rdf:object <http://my.domain.com/flibbedygibbet> ;
+                rdf:predicate rdf:type ;
+                rdf:subject <http://my.domain.com/x>
+              ] .
+
+
+
+
+
+
+
+
+
+
+[]    a       eye:Item ;
+      eye:badDatatypeURI "my:invaliddt" ;
+      eye:onLiteral "17" ;
+      eye:onStatement
+              [ a       rdf:Statement ;
+                rdf:object "17"^^<my:invaliddt> ;
+                rdf:predicate <http://my.domain.com/spoo> ;
+                rdf:subject <http://this i/s a bad uri!>
+              ] .
+
+
+
+
+
+[]    a       eye:Item ;
+      eye:badNamespaceURI "http://hahah/this/isnt/dc/" ;
+      eye:expected "http://purl.org/dc/elements/1.1/" ;
+      eye:forReason "non-standard namespace for prefix" ;
+      eye:onPrefix "dc" .
+
+
+
+
+[]    a       eye:Item ;
+      eye:badURI "http://this i/s a bad uri!" ;
+      eye:forReason eye:uriContainsSpaces , eye:uriHasNoLocalname ;
+      eye:onStatement
+              [ a       rdf:Statement ;
+                rdf:object "42"^^<my:flarn> ;
+                rdf:predicate <http://my.domain.com/spoo> ;
+                rdf:subject <http://this i/s a bad uri!>
+              ] .
+
+
+
+
+
+[]    a       eye:Item ;
+      eye:badDatatypeURI "my:unknown" ;
+      eye:onLiteral "false" ;
+      eye:onStatement
+              [ a       rdf:Statement ;
+                rdf:object "false"^^<my:unknown> ;
+                rdf:predicate <http://my.domain.com/spoo> ;
+                rdf:subject <http://my.domain.com/x>
+              ] .
+
+
+
+

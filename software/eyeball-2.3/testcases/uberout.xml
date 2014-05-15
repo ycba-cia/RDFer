@@ -1,0 +1,35 @@
+<rdf:RDF
+    xmlns:dcmi="http://purl.org/dc/dcmitype/"
+    xmlns:eye="http://jena.hpl.hp.com/Eyeball#"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:mineAlso="http://my.domain.com/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:daml="http://www.daml.org/2001/03/daml+oil#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <rdfs:Class rdf:about="http://my.domain.com/flibbedygibbet"/>
+  <rdfs:Class rdf:about="http://my.domain.com/Mumps">
+    <rdfs:subClassOf rdf:parseType="Resource">
+      <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"
+      >4</owl:minCardinality>
+      <owl:onProperty rdf:resource="http://my.domain.com/spoo"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <mineAlso:Mumps rdf:about="http://thisi/sabaduri">
+    <mineAlso:spoo rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"
+    >42</mineAlso:spoo>
+    <mineAlso:spoo rdf:parseType="Resource">
+    </mineAlso:spoo>
+    <mineAlso:spoo rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"
+    >17</mineAlso:spoo>
+    <mineAlso:spoo rdf:parseType="Resource">
+    </mineAlso:spoo>
+  </mineAlso:Mumps>
+  <mineAlso:flibbedygibbet rdf:about="http://my.domain.com/x">
+    <mineAlso:spoo rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+    >2006-07-04T13:36:00+01:00</mineAlso:spoo>
+    <mineAlso:spoo rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >false</mineAlso:spoo>
+  </mineAlso:flibbedygibbet>
+</rdf:RDF>

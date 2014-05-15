@@ -1,0 +1,85 @@
+#
+# Eyeball repair configuration file
+#
+
+@prefix eye:        <http://jena.hpl.hp.com/Eyeball#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dc:         <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms:    <http://purl.org/dc/terms/> .
+@prefix dcmi:       <http://purl.org/dc/dcmitype/> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+[]
+        eye:shortName "alltyped"
+        ; eye:failure eye:hasNoType
+        ; eye:className "com.hp.hpl.jena.eyeball2.repairtools.AllTypedRepairTool"
+        ; eye:runPosition 2
+        .
+
+[]
+		eye:shortName "cardinality"
+		; eye:failure eye:cardinalityFailure
+		; eye:className "com.hp.hpl.jena.eyeball2.repairtools.CardinalityRepairTool" 
+        ; eye:runPosition 3
+	.
+
+[]
+		eye:shortName "class"
+		; eye:failure eye:unknownClass
+		; eye:className "com.hp.hpl.jena.eyeball2.repairtools.ClassRepairTool"
+        ; eye:runPosition 4
+	.
+	
+[]
+        eye:shortName "consistenttype"
+        ; eye:failure eye:noConsistentTypeFor
+        ; eye:className "com.hp.hpl.jena.eyeball2.repairtools.ConsistentTypeRepairTool"
+        ; eye:runPosition 1
+	.
+
+[]
+        eye:shortName "literal"
+        ; eye:failure eye:badLanguage
+		; eye:failure eye:badDatatypeURI
+		; eye:failure eye:badLexicalForm
+        ; eye:className "com.hp.hpl.jena.eyeball2.repairtools.LiteralRepairTool"
+        ; eye:runPosition 5
+		.
+
+[]
+        eye:shortName "null"
+#		No failure; counterpart to null inspector
+		; eye:className "com.hp.hpl.jena.eyeball2.repairtools.NullRepairTool"
+        ; eye:runPosition 0 # never!
+		.
+
+[]
+		eye:shortname "prefix"
+		; eye:failure eye:jenaPrefixFound
+		; eye:failure eye:badNamespaceURI
+		; eye:failure eye:multiplePrefixesForNamespace
+		; eye:className "com.hp.hpl.jena.eyeball2.repairtools.PrefixRepairTool"
+        ; eye:runPosition 6
+	.	
+
+[]
+        eye:shortName "property"
+        ; eye:failure eye:unknownPredicate
+        ; eye:className "com.hp.hpl.jena.eyeball2.repairtools.PropertyRepairTool"
+        ; eye:runPosition 7
+	.
+
+[]
+        eye:shortName "uri"
+        ; eye:failure eye:badURI
+        ; eye:className "com.hp.hpl.jena.eyeball2.repairtools.URIRepairTool"
+        ; eye:runPosition 9
+	.
+
+[]
+        eye:shortName "vocabulary"
+        ; eye:failure eye:notFromSchema
+        ; eye:className "com.hp.hpl.jena.eyeball2.repairtools.VocabularyRepairTool"
+        ; eye:runPosition 8
+        .

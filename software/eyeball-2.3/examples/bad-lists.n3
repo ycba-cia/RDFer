@@ -1,0 +1,34 @@
+@prefix eye:    <http://jena.hpl.hp.com/Eyeball#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dc:     <http://purl.org/dc/elements/1.1/> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix my:     <http://my.domain.com/> .
+
+my:EList a owl:Class
+    ; rdfs:subClassOf rdf:List
+    ; rdfs:subClassOf [owl:onProperty rdf:first; owl:allValuesFrom my:Element]
+    ; rdfs:subClassOf [owl:onProperty rdf:rest; owl:allValuesFrom my:EList]
+    .
+
+my:BadList a owl:Class
+    ; rdfs:subClassOf rdf:List
+    ; rdfs:subClassOf [owl:onProperty rdf:rest; owl:allValuesFrom my:Element]
+    ; rdfs:subClassOf [owl:onProperty rdf:rest; owl:allValuesFrom my:EList]
+    .
+
+my:P rdfs:range my:EList.
+
+my:x my:P rdf:nil.
+
+my:y my:P (my:a my:b my:c).
+
+my:bad1 my:P [].
+
+my:bad2 my:P [rdf:rest rdf:nil].
+
+my:bad3 my:P [rdf:first 17].
+
+my:bad4 my:P [rdf:rest my:X, my:Y].
+
+my:bad5 my:P [rdf:first my:A, my:B].

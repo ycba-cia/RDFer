@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:eg="http://eyeball.jena.hpl.hp.com/eg#"
+    xmlns="http://eyeball.jena.hpl.hp.com/eg#">
+  <eg:NoSuchClass rdf:ID="Room">
+      <eg:noSuchProperty>17</eg:noSuchProperty>
+  </eg:NoSuchClass>
+</rdf:RDF>
+

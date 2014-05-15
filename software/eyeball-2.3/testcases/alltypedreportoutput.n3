@@ -1,0 +1,32 @@
+@prefix rss:     <http://purl.org/rss/1.0/> .
+@prefix vcard:   <http://www.w3.org/2001/vcard-rdf/3.0#> .
+@prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix eg:      <http://www.example.org/> .
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
+@prefix jms:     <http://jena.hpl.hp.com/2003/08/jms#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix daml:    <http://www.daml.org/2001/03/daml+oil#> .
+@prefix :        <#> .
+@prefix eye:     <http://jena.hpl.hp.com/Eyeball#> .
+
+[]    a       eye:Item ;
+      eye:hasNoType <http://eyeball.jena.hpl.hp.com/eg#mine> ;
+      eye:onStatement
+              [ a       rdf:Statement ;
+                rdf:object "alphabetic"^^<file:///home/peter/svnwork/eyeball-repair/testcases/string> ;
+                rdf:predicate rdf:value ;
+                rdf:subject <http://eyeball.jena.hpl.hp.com/eg#mine>
+              ] ;
+# Begin eyeball-repair additions
+      eye:repairConfidence eye:low ;
+      eye:repairType eye:addDefaultType ;
+      eye:statementAdded 
+	      [ a	rdf:Statement ;
+		rdf:subject <http://eyeball.jena.hpl.hp.com/eg#mine> ;
+	        rdf:predicate rdf:type ;
+		rdf:object rdfs:Resource
+	      ] ;
+      eye:checkFix rdf:object .

@@ -1,0 +1,8 @@
+@prefix eye:     <http://jena.hpl.hp.com/Eyeball#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix eyesvc:  <http://jena.hpl.hp.com/EyeballService#> .
+
+[]  a eye:statistic
+    ; eye:requestDate "some-date-value"
+    ; eye:requestTime "some-time-value"
+    .  

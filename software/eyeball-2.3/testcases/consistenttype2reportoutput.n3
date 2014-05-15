@@ -1,0 +1,26 @@
+@prefix rss:     <http://purl.org/rss/1.0/> .
+@prefix vcard:   <http://www.w3.org/2001/vcard-rdf/3.0#> .
+@prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix eg:      <http://www.example.org/> .
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
+@prefix jms:     <http://jena.hpl.hp.com/2003/08/jms#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix daml:    <http://www.daml.org/2001/03/daml+oil#> .
+@prefix :        <#> .
+@prefix eye:     <http://jena.hpl.hp.com/Eyeball#> .
+
+[]    a       eye:Item ;
+      eye:hasAttachedType rdfs:Resource , <http://eyeball.jena.hpl.hp.com/eg#Right> , <http://eyeball.jena.hpl.hp.com/eg#Left> ;
+      eye:noConsistentTypeFor
+              <http://eyeball.jena.hpl.hp.com/eg#B1> ;
+      eye:repairConfidence eye:good ;
+      eye:repairType eye:removeType ;
+      eye:statementRemoved 
+	[ a rdf:Statement ;
+	  rdf:subject <http://eyeball.jena.hpl.hp.com/eg#B1> ;
+	  rdf:predicate rdf:type ;
+	  rdf:object <http://eyeball.jena.hpl.hp.com/eg#Right> ] ;
+      eye:checkFix rdf:Statement .

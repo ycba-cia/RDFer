@@ -1,0 +1,7 @@
+@prefix bad1:    <unknown:scheme/> .
+@prefix bad3:    <file:///home/kers/RDF/onty.owl#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix eg:      <http://www.example.org/> .
+@prefix :        <http://eyeball.jena.hpl.hp.com/eg#> .

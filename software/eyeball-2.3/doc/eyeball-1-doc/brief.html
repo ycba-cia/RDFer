@@ -1,0 +1,433 @@
+<html>
+<head>
+<title>Eyeball</title>
+<link type="text/css" rel="stylesheet" href="styles/doc.css">
+</head>
+<body>
+
+<h1>caveat</h1>
+
+This document is a work-in-progress;  refer to the 
+<a href="full.html">manual</a> for details when this page
+doesn't help.
+
+<h1>brief guide</h1>
+
+<p>
+So you've got Eyeball installed and you've run it on one of your
+files, and Eyeball doesn't like it. You're not sure why, or what
+to do about it. Here's what's going on.
+
+<p>
+Eyeball inspects your model against a set of <i>schemas</i>.
+(If you don't tell it what schemas to use, the set is empty:
+Eyeball, he know nothing.) 
+It uses those schemas to work out what URIs count as "declared"
+in advance. It also checks URIs and literals for syntactic 
+correctness and name space prefixes for being "sensible". 
+Let's look at some of the messages you can get.
+
+
+<h2>unknown predicate reports</h2>
+
+<p>
+You'll probably find several messages like this:
+
+<pre>
+predicate not declared in any schema: <i>somePredicateURI</i>
+</pre>
+
+Eyeball looks in all the schemas you supply, and in the model itself,
+for statements it counts as "declaring" properties, and automatically knows
+about RDF and RDFS properties. Any predicate which isn't one of those "declared" 
+properties is reported.
+
+<p>If your using OWL, you can silence the "undeclared property"
+messages about OWL properties by adding to your Eyeball command line
+the option:
+
+<blockquote>
+-assume owl
+</blockquote>
+
+<p>
+Eyeball will read the OWL schema (it has a copy stashed away in the
+<i>mirror</i> directory) and add the declared properties to
+its known list. This works for any filename or URL you like, so long as 
+there's RDF there and it has a suitable file suffix - <i>.n3</i> for 
+N3 or <i>.rdf</i> or <i>.owl</i> for RDF/XML - and for the built-in
+names <i>dc</i> (basic Dublin Core), <i>dcterms</i> (Dublin Core terms)
+and <i>dc-all</i> (both). So you
+can construct your own schemas, which declare your own domain-specific
+property declarations, and invoke Eyeball with
+
+<blockquote>
+-assume owl <i>mySchemaFile.n3</i> <i>otherSchemaFile.rdf</i>
+</blockquote>
+
+<p>
+Eyeball will guess (using the Jena FileManager) the language each
+schema is written in and load it appropriately. When it reads the
+schemas, it counts as declarations of property <code>P</code>
+statements like:
+
+<ul>
+<li>P rdfs:domain _
+<li>P rdfs:range _
+<li>P rdf:type rdf:Property
+<li>_ owl:onProperty P
+</ul>
+
+<p>
+(where <code>_</code> matches anything).
+
+<p>
+You can give short names (like <b>dc</b> and <b>rdfs</b>) to
+your own schemas, or collections of schemas, using an Eyeball
+<i>config file</i>, but you'll have to see the
+<a href="full.html">manual</a> to find out how.
+
+<h2>unknown class reports</h2>
+
+<p>
+You may see messages like this:
+
+<pre>
+class not declared in any schema: <i>someClassURI</i>
+</pre>
+
+<p>
+Having read the previous section, you can probably work out
+what's going on: Eyeball reads the schemas (and model) for
+statements it counts as "declaring" a Class. Then, when it
+finds "undeclared" classes being used where a Class is
+required, it reports a problem. 
+
+<p>
+And that's exactly it. Eyeball counts as a "declaration" of
+a class C any of the statements:
+
+<ul>
+<li>(a) C rdf:type rdfs:Class
+<li>(b) C rdfs:subClassOf _
+<li>(c) _ rdfs:subClassOf C
+</ul>
+
+<p>when they appear in a schema, and counts <i>only</i>
+the type assertion (a) as a declaration in the model. 
+And it checks - in the model - that in all of
+
+<ul>
+<li>_ rdf:type C
+<li>_ rdfs:domain C
+<li>_ rdfs:range C
+<li>C rdfs:subClassOf D
+</ul>
+
+<p>that <b>C</b> and <b>D</b> are declared classes.
+
+<h2>suppressing inspectors</h2>
+
+<p>
+It may be that you're not interested in the "unknown predicate"
+or "unknown class" reports until you've sorted out the URIs.
+Or maybe you don't care about them. In that case, you can
+switch them off.
+
+<p>
+Eyeball's different checks are carried out by <i>inspector</i>
+classes. These classes are given short names by entries in 
+Eyeball config files (which are RDF files written using N3; you
+can see the default config file by looking in Eyeball's 
+<code>etc</code> directory for <code>eyeball-config.n3</code>).
+By adding eg:
+
+<blockquote>
+-exclude predicate presumed-class
+</blockquote>
+
+<p>to the Eyeball command line, you can <i>exclude</i> the inspectors
+with those short names from the check. <i>predicate</i> is the
+short name for the "unknown predicate" inspector, and
+<i>presumed-class</i> is the short name for the "unknown class"
+inspector.
+
+<h2>namespace and URI reports</h2>
+
+Eyeball checks all the URIs in the model, including (if available)
+those used for namespaces. (And literals, but see below.) Here's
+an example:
+
+<pre>
+bad namespace URI: "file:some-filename"
+    on prefix: "pqr"
+    for reason: file URI inappropriate for namespace
+</pre>
+
+A "bad namespace URI" means that Eyeball doesn't like the URI
+for a namespace in the model. The "on prefix" part of the
+report says what the namespace prefix is, and the "for reason"
+part gives the reason. In this case, we (the designer of Eyeball)
+feel that it is unwise to use file URIs - which tend to depend
+on internal details of your directory structure - for global
+concepts.
+
+<p>A more usual reason is that the URI is syntactically illegal.
+Here are some possibilities:
+
+<table border>
+
+<tr>
+    <td>URI contains spaces
+    <td>literal spaces are not legal in URIs. This usually arises from
+        file URIs when the file has a space in its name. Spaces in URIs
+        have to be encoded. 
+   
+<tr>
+    <td>URI has no scheme
+    <td>The URI has no scheme at all. This usually happens when some relative
+         URI hasn't been resolved properly, eg there's no xml base in an
+         RDF/XML document.
+         
+<tr>
+    <td>URI has an unrecognised scheme
+    <td>The scheme part of the URI - the bit before the first colon - isn't
+        recognised. Eyeball knows, by default, four schemes: 
+        <b>http</b>, <b>ftp</b>, <b>file</b>, and <b>urn</b>. This 
+        usually arises when a QName has "escaped" from somewhere, or from
+        a typo.
+        
+        <p>You can tell Eyeball about other schemes, if you need them.
+
+<tr>
+    <td>scheme should be lower-case
+    <td>The scheme part of the URI contains uppercase letters. While this
+        is not actually <i>wrong</i>, it is unconventional and pointless.
+        
+<tr>
+    <td>URI doesn't fit pattern
+    <td>Eyeball has some (weak) checks on the syntax of URIs in different
+        schemes, expressed as patterns in its config files. If a URI doesn't
+        match the pattern, Eyeball reports this problem. At the moment,
+        you'll only get this report for a <b>urn</b> URI like
+        <i>urn:x-hp:23487682347</i> where the URN id (the bit between the 
+        first and second colons, here <i>x-hp</i>) is illegal.
+    
+<tr>
+    <td>URI syntax error
+    <td>A catch-all error: Java couldn't make any sense of this URI at all.
+    
+</table>
+
+<h2>problems with literals</h2>
+
+<p>Eyeball checks literals (using the <i>literal inspector</i>,
+whose short name is <b>literal</b> if you want to switch it off),
+but the checking is quite weak because it doesn't understand
+types at the moment. You can get two different classes of error.
+
+<pre>
+bad language: someLanguageCode
+on literal: theLiteralInQuestion
+</pre>
+
+<p>Literals with language codes (things like <b>en-UK</b> or
+<b>de</b>) are checked to make sure that the language code
+conforms to the general syntax for language codes: alphanumeric
+words separated by hyphens, with the first containing no digits.
+
+<p>(Later versions of Eyeball will likely allow you to specify 
+<i>which</i> language codes you want to permit in your models.
+But we haven't got there yet.)
+
+<pre>
+bad datatype URI: someURI
+on literal: theLiteralInQuestion
+for reason: theReason
+</pre>
+
+<p>Similarly, literals with datatypes are checked to make sure
+that the type URI is legal. That's it for the moment: Eyeball
+doesn't try to find out if the URI really is a type URI, or
+if the spelling of the literal is OK for that type. But it
+spots the bad URIs. (The messages are the same as those that
+appear in the URI checking - above - for the very good reason
+that it's the same code doing the checking.)
+
+<h2>problematic prefixes</h2>
+
+<p>
+Both RDF/XML and N3 allow (and RDF/XML requires) namespaces to
+be abbreviated by prefixes. Eyeball checks prefixes for two
+possible problems. The first:
+
+<pre>
+non-standard namespace for prefix
+</pre>
+
+<p>
+This arises when a "standard" prefix has been bound to a namespace
+URI which isn't its usual one. The "standard" prefixes are taken from
+Jena's <code>PrefixMapping.Extended</code> and are currently:
+
+<blockquote>
+<b>rdf, rdfs, daml, owl, xsd, rss, vcard</b>
+</blockquote>
+
+<p>And the second:
+
+<pre>
+Jena generated prefix found
+</pre>
+
+<p>
+This arises when the model contains prefixes of the form <code>j.N</code>,
+where N is a number. These are generated by Jena when writing RDF/XML
+for URIs that must have a prefix (because they are used as types or
+predicates) but haven't been given one. 
+
+<p>
+If you're not bothered about inventing short prefixes for your
+namespaces, you can <b>-exclude</b> <code>jena-prefix</code>
+to suppress this inspection.
+
+<h1>but how do I ...</h1>
+
+<p>The reports described so far are part of Eyeball's default
+set of inspections. There are some other checks that it can do
+that are switched off by default, because they are expensive,
+initially overwhelming, or downright obscure. If you need 
+to add these checks to your eyeballing, this is how to do it.
+</p>
+
+<h2>... make sure everything is typed?</h2>
+
+<p>
+Some applications (or a general notion of cleanliness) require
+that every individual in an RDF model has an explicit 
+<code>rdf:type</code>. The Eyeball check for this isn't
+enabled by default, because lots of casual RDF use doesn't
+need it, and more sophisticated use has models with enough
+inference power to infer types.
+
+<p>
+You can add the <b>all-typed</b> inspector to the inspectors
+that Eyeball will run by adding to the command line:
+
+<blockquote>
+-inspectors defaultInspectors all-typed
+</blockquote>
+
+<p>The <b>all-typed</b> inspector will generate a message
+
+<pre>
+resource has no rdf:type
+</pre>
+
+<p>for each resource in the model which is not the subject of
+an <code>rdf:type</code> statement. 
+
+<h2>... check for type consistency?</h2>
+
+<p>
+One easy mistake to make in RDF is to make an assertion - we'll
+call it <b>S P O</b> - about some subject <b>S</b> which is 
+"of the wrong type", that is, not of whatever type <b>P</b>'s
+domain is. This isn't, in principle, an error, since RDF resources 
+can have multiple types, and this just makes <b>S</b> have a type
+which is a subtype of both <b>P</b>'s domain and whatever type
+it was supposed to have.
+
+<p>To spot this, and related problems, Eyeball has the
+<b>consistent-type</b> inspector. You can add it to the 
+inspections in the same way as the <b>all-typed</b>
+inspector:
+
+<blockquote>
+-inspectors defaultInspectors consistent-type
+</blockquote>
+
+<p>
+It checks that every resource which has been given at least
+one type has a type which is a subtype of all its types,
+under an additional assumption:
+
+<blockquote>
+Types in the type graph (the network of rdfs:subClassOf statements)
+are disjoint (share no instances) unless the type graph says they're
+not. 
+</blockquote>
+
+<p>For example, suppose that both <b>A</b> and <b>B</b> are
+subclasses of <b>Top</b>, ande that there are no other subclass
+relationships. Then <b>consistent-types</b> assumes that there
+are (supposed to be) no resources which have both <b>A</b> and
+<b>B</b> as types. If it finds a resource <b>X</b> which <i>does</i>
+have both types, it generates a message like this:
+
+<pre>
+no consistent type for: X
+has associated type: A
+has associated type: B
+has associated type: Top
+</pre>
+
+<p>
+It's up to you to disentangle the types and work out what went
+wrong. 
+
+<p>
+<i>Note</i>: this test requires that Eyeball do a significant amount
+of inference, to complete the type hierarchy and check the
+domains and ranges of proeprties. It's quite slow, which is
+one reason it isn't switched on by default. 
+
+<h2>... check the right number of values for a property?</h2>
+
+<p>You want to make sure that your data has the right properties
+for things of a certain type: say, that a book has at least one
+author (or editor), an album has at least one track, nobody in
+your organisation has more than ten managers, a Jena contrib
+has at least a <code>dc:creator</code>, a <code>dc:name</code>,
+and a <code>dc:description</code>. You write some OWL
+<i>cardinality constraints</i>:
+
+<blockquote>
+my:Type rdfs:subClassOf [owl:onProperty my:track; owl:minCardinality 1]
+</blockquote>
+
+Then you discover that, for wildly technical reasons, the OWL
+validation code in Jena doesn't think it's an error for some
+album to have no tracks (maybe there's a namespace error).
+</p>
+
+<p>You can enable Eyeball's <i>cardinality inspector</i> by
+adding
+
+<blockquote>
+-inspectors cardinality
+</blockquote>
+
+to the command line. You'll now get a report item for every resource
+that has <code>rdf:type</code> your restricted type (<code>my:Type</code>
+above) but doesn't have the right (at least one) value for the property.
+It will look something like:
+
+<pre>
+cardinality failure for: my:Instance
+    on type: my:Type
+    on property: my:track
+    cardinality range: [min: 1]
+    number of values: 0
+    values: {}
+</pre>
+
+If there are some values for the property - say you've supplied
+an <code>owl:maxCardinality</code> restriction and then gone
+over the top - they get listed inside the <code>values</code>
+curly braces. 
+</p>
+
+
+</body>
+</html>

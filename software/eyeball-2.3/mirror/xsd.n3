@@ -1,0 +1,49 @@
+#
+# local schema declaring the XSD class names.
+#
+
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+xsd:ENTITY a rdfs:Class.
+xsd:ID a rdfs:Class.
+xsd:IDREF a rdfs:Class.
+xsd:NCName a rdfs:Class.
+xsd:NMTOKEN a rdfs:Class.
+xsd:NOTATION a rdfs:Class.
+xsd:Name a rdfs:Class.
+xsd:QName a rdfs:Class.
+xsd:anyURI a rdfs:Class.
+xsd:base64Binary a rdfs:Class.
+xsd:date a rdfs:Class.
+xsd:dateTime a rdfs:Class.
+xsd:decimal a rdfs:Class.
+xsd:duration a rdfs:Class.
+xsd:gDay a rdfs:Class.
+xsd:gMonth a rdfs:Class.
+xsd:gMonthDay a rdfs:Class.
+xsd:gYear a rdfs:Class.
+xsd:gYearMonth a rdfs:Class.
+xsd:hexBinary a rdfs:Class.
+xsd:integer a rdfs:Class.
+xsd:language a rdfs:Class.
+xsd:negativeInteger a rdfs:Class.
+xsd:nonNegativeInteger a rdfs:Class.
+xsd:nonPositiveInteger a rdfs:Class.
+xsd:normalizedString a rdfs:Class.
+xsd:positiveInteger a rdfs:Class.
+xsd:time a rdfs:Class.
+xsd:token a rdfs:Class.
+xsd:unsignedByte a rdfs:Class.
+xsd:unsignedInt a rdfs:Class.
+xsd:unsignedLong a rdfs:Class.
+xsd:unsignedShort a rdfs:Class.
+xsd:boolean a rdfs:Class.
+xsd:byte a rdfs:Class.
+xsd:double a rdfs:Class.
+xsd:float a rdfs:Class.
+xsd:int a rdfs:Class.
+xsd:long a rdfs:Class.
+xsd:short a rdfs:Class.
+xsd:string a rdfs:Class.

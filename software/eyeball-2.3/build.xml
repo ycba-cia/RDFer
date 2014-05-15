@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<!-- build file for Eyeball, the Jena plausibility tester -->
+
+<project name="eyeball" default="build" basedir=".">
+
+    <!-- default value useful in Hedgehog's development environment -->
+
+    <property name="dist.name" value="eyeball-2.3"/>
+
+    <property name="lib.dir" value="lib/"/>
+    <property name="src.dir" value="src/"/>
+    <property name="src-test.dir" value="src-test/"/>
+    <property name="doc.dir" value="doc/"/>
+    <property name="examples.dir" value="examples/"/>
+    <property name="javadoc.dir" value="${doc.dir}/javadoc"/>
+    <property name="dist.root" value="dist/"/>
+    <property name="zipfile" value="${dist.name}.zip"/>
+    <property name="dist.dir" value="${dist.root}/${dist.name}"/>
+    <property name="etc.dir" value="etc/"/>
+    <property name="mirror.dir" value="mirror/"/>
+    <property name="build.dir" value="bin-build"/>
+
+    <path id="eyeball.source">
+      <dirset dir="." includes="src*" />
+    </path>
+
+    <path id="classpath">
+      <fileset dir="${lib.dir}" includes="*.jar"/>
+    </path>
+
+    <target name="massage-manual">
+      <exec 
+          output="doc/full.html" 
+          input="doc/full-template.html" 
+          executable="tools/make-manual-toc.rb"
+      />
+    </target>
+
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${javadoc.dir}"/>
+    </target>
+
+    <target name="clean.javadoc" depends="init">
+        <delete><fileset dir="${javadoc.dir}" includes="**"/></delete>
+    </target>
+
+    <target name="clean" depends="clean.javadoc">
+        <delete dir="${build.dir}"/>
+        <delete file="${lib.dir}/eyeball.jar"/>
+    </target>
+
+    <target name="build" depends="init, compile, jar"/>
+
+    <target name="compile">
+        <javac 
+            destdir="${build.dir}" 
+            debug="true" 
+            source="5"
+            target="5" 
+            classpathref="classpath"
+        >
+          <src refid="eyeball.source"/>
+        </javac>
+    </target>
+
+    <target name="jar">
+        <jar jarfile="${lib.dir}/eyeball.jar" basedir="${build.dir}">
+            <fileset dir="." includes="mirror/*"/>
+            <fileset dir="." includes="etc/*"/>
+        	<fileset dir="${build.dir}" includes="*.class"/>
+        </jar>
+    </target>
+
+    <target name="javadoc" depends="init, clean.javadoc">
+        <javadoc
+            destdir="${javadoc.dir}"
+            packagenames="com.hp.hpl.jena.eyeball.*"
+            classpathref="classpath"
+            includenosourcepackages="true"
+        >
+          <fileset dir="${src-test.dir}" includes="**/*.java"/>
+          <fileset dir="${src.dir}" includes="**/*.java"/>
+        </javadoc>
+    </target>
+
+    <target name="dist" depends="init, build, jar, test, javadoc, create-dist">
+    </target>
+
+    <target name="create-dist">
+        <mkdir dir="${dist.root}"/>
+        <mkdir dir="${dist.dir}"/>
+        <copy todir="${dist.dir}" file="README.txt"/>
+        <copy todir="${dist.dir}" file="build.xml"/>
+        <copy todir="${dist.dir}" file="ReleaseNotes.text"/>
+        <copy todir="${dist.dir}/src-test">
+            <fileset dir="${src-test.dir}" includes="**"/>
+        </copy>
+        <copy todir="${dist.dir}/src">
+            <fileset dir="${src.dir}" includes="**"/>
+        </copy>
+        <copy todir="${dist.dir}/lib">
+            <fileset dir="${lib.dir}" includes="**"/>
+        </copy>
+        <copy todir="${dist.dir}/examples">
+            <fileset dir="${examples.dir}" includes="**"/>
+        </copy>
+        <copy todir="${dist.dir}/testcases">
+            <fileset dir="./testcases/" includes="**"/>
+        </copy>
+        <copy todir="${dist.dir}/doc">
+            <fileset dir="${doc.dir}" includes="**"/>
+        </copy>
+        <copy todir="${dist.dir}/etc">
+            <fileset dir="${etc.dir}" includes="**"/>
+        </copy>
+        <copy todir="${dist.dir}/mirror">
+            <fileset dir="${mirror.dir}" includes="**"/>
+        </copy>
+        <zip zipfile="${zipfile}">
+            <fileset dir="${dist.root}" includes="${dist.name}/**"/>
+        </zip>
+    </target>
+
+    <target name="upload" depends="upload-A, upload-B"/>
+
+    <target name="upload-A">
+        <scp todir="${shell.user}@shell.sourceforge.net:/home/groups/j/je/jena/htdocs/Eyeball/" password="${password}">
+            <fileset dir="${doc.dir}" includes="*.*"/>
+        </scp>
+        <scp todir="${shell.user}@shell.sourceforge.net:/home/groups/j/je/jena/htdocs/Eyeball/styles" password="${password}">
+            <fileset dir="${doc.dir}/styles" includes="*.*"/>
+        </scp>
+    </target>
+
+    <target name="upload-B">
+        <scp todir="${shell.user}@shell.sourceforge.net:/home/groups/j/je/jena/OtherPages/Eyeball/" password="${password}">
+            <fileset dir="${doc.dir}" includes="*.*"/>
+        </scp>
+        <scp todir="${shell.user}@shell.sourceforge.net:/home/groups/j/je/jena/OtherPages/Eyeball/styles" password="${password}">
+            <fileset dir="${doc.dir}/styles" includes="*.*"/>
+        </scp>
+    </target>
+
+    <target name="test">
+        <junit haltonfailure="true" fork="yes" printsummary="yes">
+            <classpath>
+                <fileset dir="${lib.dir}" includes="*jar"/>
+            </classpath>
+            <batchtest>
+            	<formatter type="brief" usefile="false"/>
+                <fileset dir="${src-test.dir}">
+                    <include name="**/*Test*.java"/>
+                	<exclude name="**/*Base.java"/>
+                    <exclude name="**/Abstract*.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+
+</project>

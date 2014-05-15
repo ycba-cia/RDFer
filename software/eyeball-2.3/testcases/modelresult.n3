@@ -1,0 +1,20 @@
+@prefix eye:     <http://jena.hpl.hp.com/Eyeball#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix eyesvc:  <http://jena.hpl.hp.com/EyeballService#> .
+
+[]  a eye:statistic
+    ; eye:modelSize 5
+    ; eye:usedOntology [
+          eye:ontURI <http://jena.hpl.hp.com/Eyeball#>
+        ; eye:prefix "eye"
+    ]
+    ; eye:usedOntology [
+          eye:ontURI <http://purl.org/dc/elements/1.1/>
+        ; eye:prefix "dc"
+    ]
+    ; eye:usedOntology [
+          eye:ontURI <http://www.w3.org/2002/07/owl#>
+        ; eye:prefix "owl"
+    ]
+    .
+

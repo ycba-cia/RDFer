@@ -1,0 +1,26 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix :        <http://eyeball.jena.hpl.hp.com/eg#> .
+
+# Removed trailing space from what must be local name; fixed capitalisation
+<http://nowhere-else>
+      a       rdfs:Class .
+
+# Defaulted to 'file:'
+<file:/scheme>
+      a       rdfs:Class .
+
+# Added // for HTTP authority
+<http://no-authority>
+      a       rdfs:Class .
+
+# Spaces removed
+<http://nowhere/with%20spaces>
+      a       rdfs:Class .
+      
+<http://nowhereelse/with%20spaces>
+      a       rdfs:Class .
+
+<gobbledegook>
+      a       rdfs:Class .

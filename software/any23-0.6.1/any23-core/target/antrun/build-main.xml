@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <replace file="/Users/hardest/repository/SindiceOS/Any23/distro/any23-0.6.1/any23-core/target/classes/default-configuration.properties">
+    <replacefilter>
+      <replacetoken>@any23.version@</replacetoken>
+      <replacevalue>0.6.1</replacevalue>
+    </replacefilter>
+  </replace>
+</target>
+</project>

@@ -1,0 +1,57 @@
+what eyeball is for
+
+. RDF validation is weak
+.. legal literals 
+. OWL validation isn't much stronger
+.. unique name non-assumption
+.. OWL is not OOP
+.. sometimes the world /is/ closed
+.. not all errors are validation errors
+. Eyeball does heuristic closed-world checking
+
+eyeball reports
+
+. checks URIs for legality 
+.. no spaces!
+.. applies IRI checking code
+. checks prefixes 
+.. reports j.Number prefixes
+.. checks bindings for standard pefixes
+. checks class & property declarations
+.. declarations from imports & assumptions
+. checks names "belong" to namespaces
+. optional (and expensive) checks
+.. check all subjects have types
+.. check cardinality constraints
+.. check consistent types 
+
+how to steer eyeball
+
+. command line
+.. -check models-to-check
+... model can be ont model and/or RDB model
+.. -assume models-to-assume
+.. -include inspectors-by-name
+... inspectors are named in config file
+.. -exclude inspectors-by-name
+.. -render renderer-by-name
+... renderers named in config file
+... three available by default
+.. -config configFile
+... configured using Jena assembler files
+.. -root root
+... root resource for assembly
+. gui [experimental]
+
+
+configuring eyeball
+
+. driven by the config file
+.. renderers & inspectors has short names
+. plug-in architecture
+.. inspector classes
+.. renderer classes
+
+futures
+
+

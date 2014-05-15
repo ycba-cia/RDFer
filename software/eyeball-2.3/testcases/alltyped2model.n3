@@ -1,0 +1,20 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xmls:	 <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix :        <http://eyeball.jena.hpl.hp.com/eg#> .
+
+# Anyone want to visualise this class?? :oP
+:spoo 	  rdfs:subClassOf rdfs:Datatype
+	; rdfs:subClassOf rdf:List
+	; rdfs:subClassOf rdf:Statement
+	; rdfs:subClassOf rdfs:Literal
+	; rdfs:subClassOf rdfs:ContainerMembershipProperty
+	.
+
+:flarn	  rdfs:subClassOf :spoo .
+
+:splee 	rdfs:subClassOf rdf:List .
+
+:mine
+      rdf:value "1829" , "chat" .

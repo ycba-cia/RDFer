@@ -1,0 +1,28 @@
+@prefix eye:    <http://jena.hpl.hp.com/Eyeball#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dc:     <http://purl.org/dc/elements/1.1/> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix my:     <http://my.domain.com/> .
+
+[owl:onProperty rdfs:label].
+
+[owl:allValuesFrom my:Class].
+
+[owl:someValuesFrom my:Class].
+
+[owl:cardinality 1].
+
+[owl:maxCardinality 1].
+
+[owl:minCardinality 1].
+
+[owl:hasValue 17].
+
+[owl:hasValue 42; owl:someValuesFrom my:Thing].
+
+[owl:onProperty my:P, my:Q].
+
+my:X owl:equivalentClass [owl:onProperty my:P].
+
+my:Y rdfs:subClassOf [owl:allValuesFrom my:Y].

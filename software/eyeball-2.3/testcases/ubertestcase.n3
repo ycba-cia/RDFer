@@ -1,0 +1,20 @@
+@prefix rdf:       <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:      <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:       <http://www.w3.org/2002/07/owl#> .
+@prefix dc:	   <http://hahah/this/isnt/dc/> .
+@prefix my:        <http://my.domain.com/> .
+@prefix mineAlso:  <http://my.domain.com/> .
+@prefix stillMine: <http://my.domain.com/> .
+
+mineAlso:Mumps a rdfs:Class ; 
+    rdfs:subClassOf [owl:onProperty stillMine:spoo; owl:minCardinality 4] .
+
+<http://this i/s a bad uri!> a my:Mumps ;
+    my:spoo "17"^^<my:invaliddt> ;
+    mineAlso:spoo "42"^^<my:flarn> .
+
+my:x a my:flibbedygibbet ;
+    my:spoo "false"^^<my:unknown> ;
+    my:spoo "2006-07-04T13:36:00+01:00"^^<my:flarn> .
+
+
