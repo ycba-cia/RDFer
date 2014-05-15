@@ -10,7 +10,6 @@ set prefix=http://collection.britishart.yale.edu
 ::set endpoint=http://localhost/openrdf-sesame/repositories/fts_test5
 set endpoint=http://collection.britishart.yale.edu/openrdf-sesame/repositories/ycba
 
-
 ::PUT 405 Method Not Allowed when using prefix
 ::set endpoint=%prefix%/openrdf-sesame/repositories/owlim
 
