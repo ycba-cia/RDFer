@@ -205,19 +205,34 @@ public class RDFConverter implements Runnable{
 			return 1;
 		}
 				
-		//get all object ids
+		//get the time the object ids file was last modified
 		Calendar currentDate = Calendar.getInstance(); //Get the current date
 		SimpleDateFormat formatter= new SimpleDateFormat("MM/dd/yyyy"); //format it as per your requirement
 		String dateNow = formatter.format(currentDate.getTime());
-		System.out.println("Now the date is :=>  " + dateNow);
 		File objectIDsFile = new File(containedIn+"\\objects_sampleAll.txt");
 		String lastModified = formatter.format(objectIDsFile.lastModified());
-		System.out.println("Last modified date is :=>  " + lastModified);
+		
+		//get number of files in source and those in the object ids file
+		File folder = new File(source);
+		File[] listOfFiles = folder.listFiles();
+		int numObjectIDsFromSource = listOfFiles.length;
+		int numObjectIDsFromFile = 0;
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(objectIDsFile));
+			String line;
+			while ((line = br.readLine()) != null) {
+				numObjectIDsFromFile++;
+			}
+			br.close();
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			logger.log(Level.SEVERE, e2.toString());
+			return 1;
+		}
+		
 		//if objectIDsFile was not modified today, create a new one
-		if(!lastModified.equals(dateNow)){
+		if(!lastModified.equals(dateNow) || numObjectIDsFromFile != numObjectIDsFromSource){
 			logger.log(Level.INFO, "Generating object IDs");
-			File folder = new File(source);
-			File[] listOfFiles = folder.listFiles();
 			try {
 				BufferedWriter writer = new BufferedWriter(new FileWriter(objectIDsFile));
 			    for (int i = 0; i < listOfFiles.length; i++) {
@@ -240,14 +255,15 @@ public class RDFConverter implements Runnable{
 			    writer.close();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				logger.log(Level.SEVERE, e1.toString());
+				return 1;
 			}
 		}
 		
 		else {
 			try{
-				BufferedReader br = new BufferedReader(new FileReader(objectIDsFile));
 				String line;
+				BufferedReader br = new BufferedReader(new FileReader(objectIDsFile));
 				while ((line = br.readLine()) != null) {
 					objectIDsList.add(Integer.parseInt(line));
 				}

@@ -1,7 +1,8 @@
-# data
 harvest/data/
 harvest/log/
 data/
 old/
 map_lido2json/
 RdfOutput/
+*.log
+logs/

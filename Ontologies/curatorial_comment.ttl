@@ -1,8 +1,0 @@
-@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
-
-<http://collection.britshart.yale.edu/id/ontology/PX_curatorial_comment>
-      <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
-              <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> , <http://www.w3.org/2002/07/owl#DatatypeProperty> ;
-      rdfs:label "curatorial comment" ;
-      rdfs:subPropertyOf <http://128.86.231.90/id/ontology/PX_curatorial_comment> , <http://erlangen-crm.org/current/P3_has_note> .

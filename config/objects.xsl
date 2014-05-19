@@ -132,7 +132,7 @@
 		-->
 			<xsl:function name="ycba_fn:urlencode">
 				<xsl:param name="str"/>
-				<xsl:variable name="temp" select="lower-case(string-join(tokenize($str, '[^!#$&amp;*+\--:=\?-\[\]_a-z~]+'), '_'))" />
+				<xsl:variable name="temp" select="lower-case(string-join(tokenize($str, '[^!#$&amp;*+\--:=\?-Z_a-z~]+'), '_'))" />
 				<xsl:choose>
 					<xsl:when test="ends-with($temp,'_')">
 						<xsl:value-of select="substring($temp, 0, string-length($temp))" />

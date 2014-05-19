@@ -32,8 +32,8 @@
   <!ENTITY ycba_img_base "http://deliver.odai.yale.edu/info/repository/YCBA/id/">
   <!ENTITY ycba_base "http://collection.britishart.yale.edu/">
   <!ENTITY ycba_thesauri "http://collection.britishart.yale.edu/id/thesauri/">
-  <!ENTITY ycba_img_flag "http://collection.britishart.yale.edu/id/thesauri/aspect">
-  <!ENTITY ycba_img_format "http://collection.britishart.yale.edu/id/thesauri/format">
+  <!ENTITY ycba_img_flag "http://collection.britishart.yale.edu/id/thesauri/aspect/">
+  <!ENTITY ycba_img_format "http://collection.britishart.yale.edu/id/thesauri/format/">
   <!ENTITY yale_iiif "http://scale.ydc2.yale.edu/iiif/">
   <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
 ]>

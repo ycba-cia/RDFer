@@ -139,7 +139,7 @@ public class ImageHarvest implements Runnable{
 	}
 
 	private static void harvest() {
-		int numThreads = 1000;
+		int numThreads = 40;
 		int  objectsPerThread = (int)Math.ceil((double)objectIDsList.size()/(double)numThreads);
 
 		for(int i = 0; i < numThreads; i++) {
