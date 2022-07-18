@@ -1,3 +1,5 @@
+No longer supported as of August 2021
+
 RDFer
 =====
 
